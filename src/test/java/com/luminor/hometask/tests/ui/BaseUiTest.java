@@ -47,7 +47,8 @@ public abstract class BaseUiTest {
             options.addArguments("--disable-gpu");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
-        } else {
+        }
+        else {
             options.addArguments("--start-maximized");
         }
 

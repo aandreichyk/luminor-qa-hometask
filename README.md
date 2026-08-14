@@ -68,13 +68,13 @@ src/test/resources/
 ## How to run
 
 ```bash
-# Everything
+# Run all tests (API only in CI, or both locally)
 ./gradlew test
 
 # API tests only (tagged "api")
 ./gradlew apiTest
 
-# UI tests only (tagged "ui")
+# UI tests only (tagged "ui", run locally)
 ./gradlew uiTest
 ```
 
@@ -93,6 +93,12 @@ Example:
 ```bash
 ./gradlew uiTest -Dheadless=true -DbrowserSize=1920x1080
 ```
+
+## CI/CD (GitHub Actions)
+
+The pipeline automatically executes **API tests** on push and pull requests to the `main` branch.
+
+> **Note:** UI tests are excluded from CI/CD due to Cloudflare bot protection.
 
 ## Allure reports
 
