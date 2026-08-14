@@ -22,23 +22,36 @@ public abstract class BaseUiTest {
         Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
 
         String customBrowserSize = System.getProperty("browserSize");
+        String browserSize = (customBrowserSize != null && !customBrowserSize.isBlank())
+                ? customBrowserSize
+                : DEFAULT_HEADLESS_BROWSER_SIZE;
 
-        if (customBrowserSize != null && !customBrowserSize.isBlank()) {
-            Configuration.browserSize = customBrowserSize;
-        } else if (Configuration.headless) {
-            Configuration.browserSize = DEFAULT_HEADLESS_BROWSER_SIZE;
-        } else {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-            Configuration.browserCapabilities = options;
-        }
-
+        Configuration.browserSize = browserSize;
         Configuration.timeout = Long.parseLong(System.getProperty("timeout", "10000"));
+
+        Configuration.browserCapabilities = getChromeOptions(browserSize);
 
         if (!SelenideLogger.hasListener(ALLURE_SELENIDE_LISTENER)) {
             SelenideLogger.addListener(ALLURE_SELENIDE_LISTENER,
                     new AllureSelenide().screenshots(true).savePageSource(true));
         }
+    }
+
+    private static ChromeOptions getChromeOptions(String browserSize) {
+        ChromeOptions options = new ChromeOptions();
+        String windowSizeArg = browserSize.replace('x', ',');
+
+        if (Configuration.headless) {
+            options.addArguments("--headless=new");
+            options.addArguments("--window-size=" + windowSizeArg);
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        } else {
+            options.addArguments("--start-maximized");
+        }
+
+        return options;
     }
 
     @AfterEach
