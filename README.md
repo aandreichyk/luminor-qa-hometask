@@ -80,13 +80,13 @@ src/test/resources/
 
 ### Useful system properties
 
-| Property       | Applies to | Default                           | Example                                |
-|----------------|------------|------------------------------------|-----------------------------------------|
-| `headless`     | UI         | `false`                            | `-Dheadless=true`                       |
-| `browserSize`  | UI         | maximized                          | `-DbrowserSize=1920x1080`               |
-| `timeout`      | UI         | `10000` (ms)                       | `-Dtimeout=15000`                       |
-| `baseUrl`      | UI         | `https://luminor.lv/en`            | `-DbaseUrl=https://staging.site/en`     |
-| `apiBaseUrl`   | API        | `https://petstore.swagger.io/v2`   | `-DapiBaseUrl=http://localhost:8080/v2` |
+| Property      | Applies to | Default                              | Example                                 |
+|---------------|------------|---------------------------------------|-------------------------------------------|
+| `headless`    | UI         | `false`                               | `-Dheadless=true`                       |
+| `browserSize` | UI         | maximized (`1920x1080` if headless)   | `-DbrowserSize=1920x1080`                |
+| `timeout`     | UI         | `10000` (ms)                          | `-Dtimeout=15000`                        |
+| `baseUrl`     | UI         | `https://luminor.lv/en`               | `-DbaseUrl=https://staging.site/en`     |
+| `apiBaseUrl`  | API        | `https://petstore.swagger.io/v2`      | `-DapiBaseUrl=http://localhost:8080/v2` |
 
 Example:
 

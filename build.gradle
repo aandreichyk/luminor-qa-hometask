@@ -49,8 +49,6 @@ dependencies {
 }
 
 allure {
-    // allure-commandline (used to render the HTML report) has no 2.35.3 release;
-    // pin it separately from the allure-* library dependencies above.
     version = '2.36.0'
     adapter {
         frameworks {
@@ -65,6 +63,12 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
     systemProperty 'selenide.headless', System.getProperty('selenide.headless', 'true')
     systemProperty 'headless', System.getProperty('headless', System.getProperty('selenide.headless', 'true'))
+    ['browserSize', 'timeout', 'baseUrl', 'apiBaseUrl'].each { name ->
+        def value = System.getProperty(name)
+        if (value != null) {
+            systemProperty name, value
+        }
+    }
     testLogging {
         events 'passed', 'skipped', 'failed'
         exceptionFormat 'full'

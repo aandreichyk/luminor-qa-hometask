@@ -15,12 +15,18 @@ public abstract class BaseUiTest {
 
     protected static final String BASE_URL = System.getProperty("baseUrl", "https://luminor.lv/en");
 
+    private static final String DEFAULT_HEADLESS_BROWSER_SIZE = "1920x1080";
+
     @BeforeAll
     static void setUpSelenide() {
+        Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
+
         String customBrowserSize = System.getProperty("browserSize");
 
         if (customBrowserSize != null && !customBrowserSize.isBlank()) {
             Configuration.browserSize = customBrowserSize;
+        } else if (Configuration.headless) {
+            Configuration.browserSize = DEFAULT_HEADLESS_BROWSER_SIZE;
         } else {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--start-maximized");
@@ -28,7 +34,6 @@ public abstract class BaseUiTest {
         }
 
         Configuration.timeout = Long.parseLong(System.getProperty("timeout", "10000"));
-        Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
 
         if (!SelenideLogger.hasListener(ALLURE_SELENIDE_LISTENER)) {
             SelenideLogger.addListener(ALLURE_SELENIDE_LISTENER,
